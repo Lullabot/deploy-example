@@ -7,7 +7,7 @@ git checkout master-compiled
 git fetch
 git merge origin/master
 
-cp .gitignore.acquia .gitignore
+mv -f .gitignore.acquia .gitignore
 
 # Build the theme assets
 # npm install
@@ -15,8 +15,6 @@ cp .gitignore.acquia .gitignore
 
 # Install files with composer
 composer install --optimize-autoloader
-
-git checkout .gitignore
 
 # These are the directories or path patterns to force commit.
 FORCE_COMMIT_PATTERNS="vendor \
