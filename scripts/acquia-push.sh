@@ -44,13 +44,13 @@ while git tag|grep ${TAG}; do
   TAG=${DATE}.${VERSION}
 done
 git tag -a "${TAG}" -m "Compiled code for ${TAG}"
-git commit -m"Deployment for tag ${TAG}"
+git commit --quiet -m"Deployment for tag ${TAG}"
 
 # Push our branch and tags.
 git push --follow-tags
 
 # Switch back to the master branch
-git checkout master
+git checkout --quiet master
 
 # Replace the ignored files
 git checkout .gitignore.acquia
