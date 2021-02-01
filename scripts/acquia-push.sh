@@ -19,7 +19,7 @@ FORCE_COMMIT_PATTERNS="vendor \
 /docroot/core \
 /docroot/modules/contrib \
 /docroot/themes/contrib \
-/docroot/themes/custom/elluciantheme/dist \
+/docroot/themes/custom/mytheme/dist \
 /docroot/profiles/contrib \
 /docroot/libraries"
 
