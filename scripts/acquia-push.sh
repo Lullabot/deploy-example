@@ -29,7 +29,7 @@ FORCE_COMMIT_PATTERNS="vendor \
 # Clean out all .git dirs from any directories.
 for PATTERN in $FORCE_COMMIT_PATTERNS; do
   echo $PATTERN
-  if [[ -d $PATTERN ]]; then
+  if [ -d $PATTERN ]; then
     find $PATTERN -type d -name .git | xargs rm -rf
     # Add all of the master branch assets into master-compiled.
     git add --force $PATTERN > /dev/null
