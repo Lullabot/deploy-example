@@ -9,3 +9,5 @@ web/themes/contrib
 web/files
 web/sites/*/files
 web/sites/*/private
+
+test
