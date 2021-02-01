@@ -36,9 +36,15 @@ done
 
 # Create a tag
 DATE=`date +%Y-%m-%d`
-TAG_SUFFIX=0
-git tag -a "${DATE}.${TAG_SUFFIX}" -m "Compiled code for ${DATE}.${TAG_SUFFIX}"
-git commit -m"Deployment for tag ${DATE}.${TAG_SUFFIX}"
+VERSION=0
+TAG=${DATE}.${VERSION}
+# Check to see if the tag already exists. If so, increment the version.
+while git tag|grep ${TAG}; do
+  VERSION=$((VERSION+1))
+  TAG=${DATE}.${VERSION}
+done
+git tag -a "${TAG}" -m "Compiled code for ${TAG}"
+git commit -m"Deployment for tag ${TAG}"
 
 # Undo all our changes to the branch.
 git push origin master-compiled
