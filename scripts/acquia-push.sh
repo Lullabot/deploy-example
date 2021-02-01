@@ -20,12 +20,11 @@ git checkout .gitignore
 
 # These are the directories or path patterns to force commit.
 FORCE_COMMIT_PATTERNS="vendor \
-/docroot/core \
-/docroot/modules/contrib \
-/docroot/themes/contrib \
-/docroot/themes/custom/mytheme/dist \
-/docroot/profiles/contrib \
-/docroot/libraries"
+/web/core \
+/web/modules/contrib \
+/web/themes/contrib \
+/web/profiles/contrib \
+/web/libraries"
 
 # Clean out all .git dirs from any directories.
 for PATTERN in $FORCE_COMMIT_PATTERNS; do
