@@ -43,7 +43,7 @@ git tag -a "${DATE}.${TAG_SUFFIX}" -m "Compiled code for ${DATE}.${TAG_SUFFIX}"
 git commit -m"Deployment for tag ${DATE}.${TAG_SUFFIX}"
 
 # Undo all our changes to the branch.
-git push
+git push origin master-compiled
 
 # Switch back to the master branch
 git checkout master
