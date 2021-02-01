@@ -43,6 +43,7 @@ while git tag|grep ${TAG}; do
   VERSION=$((VERSION+1))
   TAG=${DATE}.${VERSION}
 done
+git add --all
 git tag -a "${TAG}" -m "Compiled code for ${TAG}"
 git commit --quiet -m"Deployment for tag ${TAG}"
 
