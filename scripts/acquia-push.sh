@@ -7,12 +7,16 @@ git checkout master-compiled
 git fetch
 git merge origin/master
 
+cp .gitignore.acquia .gitignore
+
 # Build the theme assets
-npm install
-npm run build
+# npm install
+# npm run build
 
 # Install files with composer
 composer install --optimize-autoloader
+
+git checkout .gitignore
 
 # These are the directories or path patterns to force commit.
 FORCE_COMMIT_PATTERNS="vendor \
@@ -41,3 +45,6 @@ git commit -m"Deployment for tag ${DATE}.${TAG_SUFFIX}"
 
 # Undo all our changes to the branch.
 git push
+
+# Switch back to the master branch
+git checkout master
