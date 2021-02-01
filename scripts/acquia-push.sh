@@ -51,3 +51,8 @@ git push origin master-compiled
 
 # Switch back to the master branch
 git checkout master
+
+# Replace the ignored files
+git checkout .gitignore.acquia
+git checkout .gitignore
+
