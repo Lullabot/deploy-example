@@ -44,7 +44,7 @@ while git tag|grep ${TAG}; do
   TAG=${DATE}.${VERSION}
 done
 git tag -a "${TAG}" -m "Compiled code for ${TAG}"
-git commit -m"Deployment for tag ${TAG}"
+git push origin ${TAG}
 
 # Undo all our changes to the branch.
 git push origin master-compiled
