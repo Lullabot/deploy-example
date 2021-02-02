@@ -12,11 +12,11 @@ COMPILED_BRANCH="master-compiled"
 
 # Directories or path patterns to force commit.
 FORCE_COMMIT_PATTERNS="vendor \
-/web/core \
-/web/modules/contrib \
-/web/themes/contrib \
-/web/profiles/contrib \
-/web/libraries"
+web/core \
+web/modules/contrib \
+web/themes/contrib \
+web/profiles/contrib \
+web/libraries"
 
 # Warning message.
 read -r -p "Are you sure you want to update the ${COMPILED_BRANCH} and create a new tag? <y/N> " INPUT
