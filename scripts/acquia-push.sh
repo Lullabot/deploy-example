@@ -32,7 +32,7 @@ git fetch
 git merge ${GIT_REMOTE_NAME}/master
 
 # Don't ignore the composer-generated files.
-mv -f .gitignore.acquia .gitignore
+cp -f .gitignore.acquia .gitignore
 
 # Build the theme assets
 # npm install
