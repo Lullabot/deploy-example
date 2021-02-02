@@ -2,7 +2,7 @@
 set -e
 
 git checkout master
-git pull
+git pull --no-edit
 git checkout master-compiled
 git fetch
 git merge origin/master
