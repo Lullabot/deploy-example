@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
-set -e
+
+#############
+# CONFIGURE #
+#############
 
 # Configure Git repository.
 GIT_URL="git@github.com:mtift/deploy-example.git"
 GIT_REMOTE_NAME="origin"
+UNCOMPILED_BRANCH="master"
+COMPILED_BRANCH="master-compiled"
 
 # Directories or path patterns to force commit.
 FORCE_COMMIT_PATTERNS="vendor \
@@ -17,22 +22,27 @@ FORCE_COMMIT_PATTERNS="vendor \
 # in the following Git repository.
 
 # Make sure the repo exists as a remote.
-if git remote|grep ${GIT_REMOTE_NAME}; then
-  git remote set-url ${GIT_REMOTE_NAME} ${GIT_URL}
+if git remote|grep $GIT_REMOTE_NAME; then
+  git remote set-url $GIT_REMOTE_NAME $GIT_URL
 else
-  git remote add ${GIT_REMOTE_NAME} ${GIT_URL}
+  git remote add $GIT_REMOTE_NAME $GIT_URL
 fi
 
-# Get the lastest code into master-compiled.
-git checkout master
-# Accept the default commit message.
-git pull ${GIT_REMOTE_NAME} master --no-edit
-git checkout master-compiled
-git fetch
-git merge ${GIT_REMOTE_NAME}/master
+# Make sure $UNCOMPILED_BRANCH is clean.
+git checkout $UNCOMPILED_BRANCH
+git fetch $GIT_REMOTE_NAME
 
-# Don't ignore the composer-generated files.
-cp -f .gitignore.acquia .gitignore
+# TODO: fix this.
+if git diff-index --quiet HEAD --; then
+  echo "Please clean up your ${UNCOMPILED_BRANCH} before proceeding."
+  exit 0;
+fi
+
+
+
+#########
+# BUILD #
+#########
 
 # Build the theme assets
 # npm install
@@ -41,12 +51,27 @@ cp -f .gitignore.acquia .gitignore
 # Install files with composer
 composer install --optimize-autoloader
 
+
+##########
+# COMMIT #
+##########
+
+# Accept the default commit message.
+git pull ${GIT_REMOTE_NAME} ${UNCOMPILED_BRANCH} --no-edit
+git checkout ${COMPILED_BRANCH}
+git fetch
+git merge ${GIT_REMOTE_NAME}/${UNCOMPILED_BRANCH}
+
+
+# Don't ignore the composer-generated files.
+cp -f .gitignore.acquia .gitignore
+
 # Clean out all .git dirs from any directories.
 for PATTERN in $FORCE_COMMIT_PATTERNS; do
   echo $PATTERN
   if [ -d $PATTERN ]; then
     find $PATTERN -type d -name .git | xargs rm -rf
-    # Add all of the master branch assets into master-compiled.
+    # Add all of the $UNCOMPILED_BRANCH assets into $COMPILED_BRANCH.
     git add --force $PATTERN > /dev/null
   fi
 done
@@ -67,9 +92,9 @@ git commit --quiet -m"Deployment for tag ${TAG}"
 # Push our branch and tags.
 git push --follow-tags
 
-# Switch back to the master branch
-git checkout --quiet master
+# Switch back to the $UNCOMPILED_BRANCH
+git checkout --quiet $UNCOMPILED_BRANCH
 
 # Replace the ignored files
-git checkout ${GIT_REMOTE_NAME}/master -- .gitignore.acquia
+git checkout ${GIT_REMOTE_NAME}/${UNCOMPILED_BRANCH} -- .gitignore.acquia
 git checkout .gitignore
