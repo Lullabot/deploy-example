@@ -3,7 +3,7 @@ set -e
 
 # Configure Git repository.
 GIT_URL="git@github.com:mtift/deploy-example.git"
-GIT_REMOTE_NAME="acquia"
+GIT_REMOTE_NAME="origin"
 
 # Directories or path patterns to force commit.
 FORCE_COMMIT_PATTERNS="vendor \
