@@ -96,9 +96,6 @@ while git tag|grep ${TAG}; do
   TAG=${DATE}.${VERSION}
 done
 
-# Replace the original .gitignore file.
-git checkout .gitignore
-
 # Create a temporary branch to store the assets.
 # TODO: There might be a better way to do this, but for now this works.
 git checkout -b $TAG
