@@ -11,5 +11,5 @@ Removing modules does not seem to work.
 
 ## Recognition
 Thank you to James Sansbury and Hawkeye Tenderwolf for their help with this.
-But, if there is anything that looks really weird here, it was definitely all
-my fault.
+But, if there is anything that looks really weird here, it definitely came from
+Matthew Tift.
