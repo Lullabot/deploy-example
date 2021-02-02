@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
+# Get the lastest code into master-compiled
 git checkout master
 git pull --no-edit
 git checkout master-compiled
