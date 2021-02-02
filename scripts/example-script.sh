@@ -95,6 +95,7 @@ done
 git checkout .gitignore
 
 # Create a temporary branch to store the assets.
+# TODO: There might be a better way to do this, but for now this works.
 git checkout -b $TAG
 git add --all
 git commit --quiet -m"Deployment for tag ${TAG}"
