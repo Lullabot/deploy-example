@@ -2,10 +2,9 @@
 set -e
 
 git checkout master
-# git pull
-# git checkout master-compiled
-# git fetch
-# git merge origin/master
+git checkout master-compiled
+git pull origin master-compiled
+git merge master
 
 mv -f .gitignore.acquia .gitignore
 
