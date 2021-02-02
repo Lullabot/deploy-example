@@ -80,7 +80,7 @@ while git tag|grep ${TAG}; do
 done
 
 # This deletes the old master-compiled. The tags contain the history.
-git checkout -B origin/master-compiled
+git checkout -B master-compiled --track origin/master-compiled
 git add --all
 git commit --quiet -m"Deployment for tag ${TAG}"
 
