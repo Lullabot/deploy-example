@@ -22,20 +22,21 @@ FORCE_COMMIT_PATTERNS="vendor \
 # in the following Git repository.
 
 # Make sure the repo exists as a remote.
-if git remote|grep $GIT_REMOTE_NAME; then
-  git remote set-url $GIT_REMOTE_NAME $GIT_URL
-else
-  git remote add $GIT_REMOTE_NAME $GIT_URL
-fi
+# if git remote|grep $GIT_REMOTE_NAME; then
+  # git remote set-url $GIT_REMOTE_NAME $GIT_URL
+# else
+  # git remote add $GIT_REMOTE_NAME $GIT_URL
+# fi
 
 # Make sure $UNCOMPILED_BRANCH is clean.
-git checkout $UNCOMPILED_BRANCH
-git fetch $GIT_REMOTE_NAME
-if git diff-index --quiet HEAD --; then
+# git checkout $UNCOMPILED_BRANCH
+# git fetch $GIT_REMOTE_NAME
+
+# TODO: fix this.
+if -z git diff-index --quiet HEAD --; then
   echo "Please clean up your ${UNCOMPILED_BRANCH} before proceeding."
   exit 0;
 fi
-
 
 
 #########
@@ -53,13 +54,6 @@ composer install --optimize-autoloader
 ##########
 # COMMIT #
 ##########
-
-# Accept the default commit message.
-git pull ${GIT_REMOTE_NAME} ${UNCOMPILED_BRANCH} --no-edit
-git checkout ${COMPILED_BRANCH}
-git fetch
-git merge ${GIT_REMOTE_NAME}/${UNCOMPILED_BRANCH}
-
 
 # Don't ignore the composer-generated files.
 cp -f .gitignore.acquia .gitignore
@@ -83,16 +77,18 @@ while git tag|grep ${TAG}; do
   VERSION=$((VERSION+1))
   TAG=${DATE}.${VERSION}
 done
+
+git checkout -b $TAG
 git add --all
-git tag -a "${TAG}" -m "Compiled code for ${TAG}"
 git commit --quiet -m"Deployment for tag ${TAG}"
+git checkout master-compiled
+git checkout $TAG -- .
+git commit --quiet -m"Deployment for tag ${TAG}"
+git tag -a "${TAG}" -m "Compiled code for ${CTAG}."
+git branch -D $TAG
 
 # Push our branch and tags.
-git push --follow-tags
+git push origin
 
-# Switch back to the $UNCOMPILED_BRANCH
-git checkout --quiet $UNCOMPILED_BRANCH
-
-# Replace the ignored files
-git checkout ${GIT_REMOTE_NAME}/${UNCOMPILED_BRANCH} -- .gitignore.acquia
-git checkout .gitignore
+# Undo all our changes to the branch.
+git reset --hard origin/master
