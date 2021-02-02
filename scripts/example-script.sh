@@ -56,13 +56,18 @@ fi
 # BUILD #
 #########
 
-# Build the theme assets
-# npm install
-# npm run build
+build_local() {
 
-# Install files with composer
-composer install --optimize-autoloader > /dev/null
+  # Build the theme assets
+  # npm install
+  # npm run build
 
+  # Install files with composer
+  composer install --optimize-autoloader > /dev/null
+
+}
+
+build_local
 
 ##########
 # COMMIT #
@@ -112,5 +117,6 @@ git push --follow-tags origin
 
 # Get back to where we started.
 git checkout $UNCOMPILED_BRANCH
+build_local
 
 echo "\nComplete! Updated the ${COMPILED_BRANCH} branch and created a new tag ${TAG}"
