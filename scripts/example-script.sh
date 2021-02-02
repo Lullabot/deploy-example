@@ -90,5 +90,4 @@ git branch -D $TAG
 # Push our branch and tags.
 git push origin
 
-# Undo all our changes to the branch.
-git reset --hard origin/master
+git checkout origin master
