@@ -56,13 +56,6 @@ composer install --optimize-autoloader
 # COMMIT #
 ##########
 
-# Accept the default commit message.
-git pull ${GIT_REMOTE_NAME} ${UNCOMPILED_BRANCH} --no-edit
-git checkout ${COMPILED_BRANCH}
-git fetch
-git merge ${GIT_REMOTE_NAME}/${UNCOMPILED_BRANCH}
-
-
 # Don't ignore the composer-generated files.
 cp -f .gitignore.acquia .gitignore
 
@@ -85,16 +78,15 @@ while git tag|grep ${TAG}; do
   VERSION=$((VERSION+1))
   TAG=${DATE}.${VERSION}
 done
+
+# Reset master branch to use the Pantheon repository history, but without changing our working tree (--soft).
+git reset --soft origin/master-compiled
 git add --all
-git tag -a "${TAG}" -m "Compiled code for ${TAG}"
 git commit --quiet -m"Deployment for tag ${TAG}"
+git tag -a "${TAG}" -m "Compiled code for ${TAG}"
 
 # Push our branch and tags.
-git push --follow-tags
+git push --follow-tags origin
 
-# Switch back to the $UNCOMPILED_BRANCH
-git checkout --quiet $UNCOMPILED_BRANCH
-
-# Replace the ignored files
-git checkout ${GIT_REMOTE_NAME}/${UNCOMPILED_BRANCH} -- .gitignore.acquia
-git checkout .gitignore
+# Undo all our changes to the branch.
+git reset --hard origin/master
