@@ -54,5 +54,5 @@ git push --follow-tags
 git checkout --quiet master
 
 # Replace the ignored files
-git checkout .gitignore.acquia
+git checkout origin/master -- .gitignore.acquia
 git checkout .gitignore
