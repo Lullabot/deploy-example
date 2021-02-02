@@ -33,7 +33,7 @@ git checkout $UNCOMPILED_BRANCH
 git fetch $GIT_REMOTE_NAME
 
 # TODO: fix this.
-if git diff-index --quiet HEAD --; then
+if -z git diff-index --quiet HEAD --; then
   echo "Please clean up your ${UNCOMPILED_BRANCH} before proceeding."
   exit 0;
 fi
