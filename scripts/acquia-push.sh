@@ -1,20 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
-prompt_confirm "Are all of the following true?
-
-- You are on the master-compiled branch
-- You have merged the master branch into this branch like this
-
-    git checkout master-compiled
-    git fetch
-    git merge origin/master
-
-" || exit 0
-
+git checkout master
+git pull
 git checkout master-compiled
-git pull origin master-compiled
-git merge master
+git fetch
+git merge origin/master
 
 mv -f .gitignore.acquia .gitignore
 
