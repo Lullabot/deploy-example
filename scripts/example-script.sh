@@ -46,10 +46,10 @@ git fetch $GIT_REMOTE_NAME
 
 # Checkout that the branch is clean
 FILES=`git diff --name-only`
-for file in $files; do
-  echo "\n>> Aborted deployment. The following files in the ${UNCOMPILED_BRANCH} differ:\n{$FILE}."
-  exit 1;
-done
+if [ ! -z "$FILES" ]; then
+  echo "\n>> Aborted deployment. Please clean up the ${UNCOMPILED_BRANCH} branch."
+  exit 1
+fi
 
 
 #########
