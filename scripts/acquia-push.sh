@@ -2,9 +2,15 @@
 set -e
 
 git checkout master
-git pull
+git pull origin master
 git checkout master-compiled
 git fetch
+
+git log master-compiled..master
+read -p "Review your changes..."
+
+exit N
+
 git merge origin/master
 
 mv -f .gitignore.acquia .gitignore
