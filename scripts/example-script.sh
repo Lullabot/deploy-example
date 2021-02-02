@@ -79,14 +79,14 @@ while git tag|grep ${TAG}; do
   TAG=${DATE}.${VERSION}
 done
 
-# Reset master branch to use the Pantheon repository history, but without changing our working tree (--soft).
+# Reset master branch to use the Pantheon repository history, but without
+# changing our working tree (--soft).
 git reset --soft origin/master-compiled
 git add --all
 git commit --quiet -m"Deployment for tag ${TAG}"
-git tag -a "${TAG}" -m "Compiled code for ${TAG}"
 
 # Push our branch and tags.
-git push --follow-tags origin
+git push origin
 
 # Undo all our changes to the branch.
 git reset --hard origin/master
