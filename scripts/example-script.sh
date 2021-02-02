@@ -39,7 +39,6 @@ if -z git diff-index --quiet HEAD --; then
 fi
 
 
-
 #########
 # BUILD #
 #########
@@ -79,10 +78,14 @@ while git tag|grep ${TAG}; do
   TAG=${DATE}.${VERSION}
 done
 
-# This deletes the old master-compiled. The tags contain the history.
-git checkout -B master-compiled --track origin/master-compiled
+git checkout -b $TAG
 git add --all
 git commit --quiet -m"Deployment for tag ${TAG}"
+git checkout master-compiled
+git checkout $TAG -- .
+git commit --quiet -m"Deployment for tag ${TAG}"
+git tag -a "${TAG}" -m "Compiled code for ${CTAG}."
+git branch -D $TAG
 
 # Push our branch and tags.
 git push origin
