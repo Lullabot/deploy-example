@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-git checkout master
-git pull origin master --no-edit
 git checkout master-compiled
-git fetch
+git pull origin master-compiled
 git merge master
 
 mv -f .gitignore.acquia .gitignore
