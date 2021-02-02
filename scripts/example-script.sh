@@ -18,25 +18,38 @@ FORCE_COMMIT_PATTERNS="vendor \
 /web/profiles/contrib \
 /web/libraries"
 
-# Add a warning message. You are about to update the following directories
-# in the following Git repository.
+# Warning message.
+read -r -p "Are you sure you want to update the ${COMPILED_BRANCH} and create a new tag? <y/N> " INPUT
+case $INPUT in
+    [yY][eE][sS]|[yY])
+ echo "Proceeding with deployment"
+ ;;
+    [nN][oO]|[nN])
+ echo "Aborting deployment"
+       ;;
+    *)
+ echo "Aborting deployment"
+ exit 1
+ ;;
+esac
 
 # Make sure the repo exists as a remote.
-# if git remote|grep $GIT_REMOTE_NAME; then
-  # git remote set-url $GIT_REMOTE_NAME $GIT_URL
-# else
-  # git remote add $GIT_REMOTE_NAME $GIT_URL
-# fi
+if git remote|grep $GIT_REMOTE_NAME; then
+  git remote set-url $GIT_REMOTE_NAME $GIT_URL
+else
+  git remote add $GIT_REMOTE_NAME $GIT_URL
+fi
 
 # Make sure $UNCOMPILED_BRANCH is clean.
-# git checkout $UNCOMPILED_BRANCH
-# git fetch $GIT_REMOTE_NAME
+git checkout $UNCOMPILED_BRANCH
+git fetch $GIT_REMOTE_NAME
 
-# TODO: fix this.
-if -z git diff-index --quiet HEAD --; then
-  echo "Please clean up your ${UNCOMPILED_BRANCH} before proceeding."
-  exit 0;
-fi
+# Checkout that the branch is clean
+FILES=`git diff --name-only`
+for file in $files; do
+  echo "\n>> Aborted deployment. The following files in the ${UNCOMPILED_BRANCH} differ:\n{$FILE}."
+  exit 1;
+done
 
 
 #########
@@ -48,7 +61,7 @@ fi
 # npm run build
 
 # Install files with composer
-composer install --optimize-autoloader
+composer install --optimize-autoloader > /dev/null
 
 
 ##########
@@ -78,10 +91,13 @@ while git tag|grep ${TAG}; do
   TAG=${DATE}.${VERSION}
 done
 
+# Create a temporary branch to store the assets.
 git checkout -b $TAG
 git add --all
 git commit --quiet -m"Deployment for tag ${TAG}"
-git checkout master-compiled
+
+# Add the the changes in the $TAG branch to the $COMPILED_BRANCH.
+git checkout $COMPILED_BRANCH
 git checkout $TAG -- .
 git commit --quiet -m"Deployment for tag ${TAG}"
 git tag -a "${TAG}" -m "Compiled code for ${CTAG}."
@@ -90,4 +106,8 @@ git branch -D $TAG
 # Push our branch and tags.
 git push --follow-tags origin
 
-git checkout master
+# Get back to where we started.
+git checkout $UNCOMPILED_BRANCH
+
+echo "Updated the ${COMPILED_BRANCH} branch and created a new tag ${TAG}"
+
