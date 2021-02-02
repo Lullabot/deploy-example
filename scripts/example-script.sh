@@ -90,4 +90,4 @@ git branch -D $TAG
 # Push our branch and tags.
 git push origin
 
-git checkout origin master
+git checkout master
