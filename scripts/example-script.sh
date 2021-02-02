@@ -19,7 +19,7 @@ FORCE_COMMIT_PATTERNS="vendor \
 /web/libraries"
 
 # Warning message.
-read -r -p "Are you sure you want to update the ${COMPILED_BRANCH} and create a new tag? <Y/n> " INPUT
+read -r -p "Are you sure you want to update the ${COMPILED_BRANCH} and create a new tag? <y/N> " INPUT
 case $INPUT in
     [yY][eE][sS]|[yY])
  echo "Proceeding with deployment"
@@ -44,12 +44,11 @@ fi
 git checkout $UNCOMPILED_BRANCH
 git fetch $GIT_REMOTE_NAME
 
-# TODO: fix this.
-if ! git diff-index --quiet HEAD --; then
-  echo "Please clean up your ${UNCOMPILED_BRANCH} before proceeding."
-  exit 0;
+# Checkout that the branch is clean
+if [ ! $(git diff-index --quiet HEAD --) ]; then
+  echo "\n>> Aborted deployment. Please clean up your ${UNCOMPILED_BRANCH} before proceeding."
+  exit 1;
 fi
-
 
 #########
 # BUILD #
