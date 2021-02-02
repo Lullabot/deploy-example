@@ -45,10 +45,12 @@ git checkout $UNCOMPILED_BRANCH
 git fetch $GIT_REMOTE_NAME
 
 # Checkout that the branch is clean
-if [ ! $(git diff-index --quiet HEAD --) ]; then
-  echo "\n>> Aborted deployment. Please clean up your ${UNCOMPILED_BRANCH} before proceeding."
-  exit 1;
+FILES=`git diff --name-only`
+if [ ! -z "$FILES" ]; then
+  echo "\n>> Aborted deployment. Please clean up the ${UNCOMPILED_BRANCH} branch."
+  exit 1
 fi
+
 
 #########
 # BUILD #
