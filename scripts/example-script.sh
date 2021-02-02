@@ -109,5 +109,4 @@ git push --follow-tags origin
 # Get back to where we started.
 git checkout $UNCOMPILED_BRANCH
 
-echo "Updated the ${COMPILED_BRANCH} branch and created a new tag ${TAG}"
-
+echo "\nComplete! Updated the ${COMPILED_BRANCH} branch and created a new tag ${TAG}"
