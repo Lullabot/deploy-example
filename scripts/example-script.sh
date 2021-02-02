@@ -101,6 +101,8 @@ git checkout $COMPILED_BRANCH
 git checkout $TAG -- .
 git commit --quiet -m"Deployment for tag ${TAG}"
 git tag -a "${TAG}" -m "Compiled code for ${CTAG}."
+
+# Remove the temporary branch.
 git branch -D $TAG
 
 # Push our branch and tags.
@@ -110,4 +112,3 @@ git push --follow-tags origin
 git checkout $UNCOMPILED_BRANCH
 
 echo "Updated the ${COMPILED_BRANCH} branch and created a new tag ${TAG}"
-
