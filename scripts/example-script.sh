@@ -22,15 +22,15 @@ FORCE_COMMIT_PATTERNS="vendor \
 # in the following Git repository.
 
 # Make sure the repo exists as a remote.
-if git remote|grep $GIT_REMOTE_NAME; then
-  git remote set-url $GIT_REMOTE_NAME $GIT_URL
-else
-  git remote add $GIT_REMOTE_NAME $GIT_URL
-fi
+# if git remote|grep $GIT_REMOTE_NAME; then
+  # git remote set-url $GIT_REMOTE_NAME $GIT_URL
+# else
+  # git remote add $GIT_REMOTE_NAME $GIT_URL
+# fi
 
 # Make sure $UNCOMPILED_BRANCH is clean.
-git checkout $UNCOMPILED_BRANCH
-git fetch $GIT_REMOTE_NAME
+# git checkout $UNCOMPILED_BRANCH
+# git fetch $GIT_REMOTE_NAME
 
 # TODO: fix this.
 if -z git diff-index --quiet HEAD --; then
@@ -79,9 +79,8 @@ while git tag|grep ${TAG}; do
   TAG=${DATE}.${VERSION}
 done
 
-# Reset master branch to use the Pantheon repository history, but without
-# changing our working tree (--soft).
-git reset --soft origin/master-compiled
+# This deletes the old master-compiled. The tags contain the history.
+git checkout -B origin/master-compiled
 git add --all
 git commit --quiet -m"Deployment for tag ${TAG}"
 
