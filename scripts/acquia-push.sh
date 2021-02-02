@@ -2,16 +2,10 @@
 set -e
 
 git checkout master
-git pull origin master
+git pull origin master --no-edit
 git checkout master-compiled
 git fetch
-
-git log master-compiled..master
-read -p "Review your changes..."
-
-exit N
-
-git merge origin/master
+git merge master
 
 mv -f .gitignore.acquia .gitignore
 
