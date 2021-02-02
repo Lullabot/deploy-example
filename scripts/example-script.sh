@@ -104,6 +104,14 @@ git commit --quiet -m"Deployment for tag ${TAG}"
 
 # Add the the changes in the $TAG branch to the $COMPILED_BRANCH.
 git checkout $COMPILED_BRANCH
+# In case anything has been removed clear out all of the files in all of the
+# composer-generated directories.
+for PATTERN in $FORCE_COMMIT_PATTERNS; do
+  echo $PATTERN
+  if [ -d $PATTERN ]; then
+    rm -rf $PATTERN
+  fi
+done
 git checkout $TAG -- .
 git commit --quiet -m"Deployment for tag ${TAG}"
 git tag -a "${TAG}" -m "Compiled code for ${CTAG}."
