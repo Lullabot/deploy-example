@@ -88,6 +88,6 @@ git tag -a "${TAG}" -m "Compiled code for ${CTAG}."
 git branch -D $TAG
 
 # Push our branch and tags.
-git push origin
+git push --follow-tags origin
 
 git checkout master
