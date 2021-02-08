@@ -5,7 +5,7 @@
 #############
 
 # Configure Git repository.
-GIT_URL="git@github.com:mtift/deploy-example.git"
+GIT_URL="git@github.com:Lulabot/deploy-example.git"
 GIT_REMOTE_NAME="origin"
 UNCOMPILED_BRANCH="master"
 COMPILED_BRANCH="master-compiled"
@@ -55,14 +55,6 @@ fi
 #########
 # BUILD #
 #########
-
-# In case anything has been removed clear out all of the files in all of the
-# composer-generated directories.
-for PATTERN in $FORCE_COMMIT_PATTERNS; do
-  if [ -d $PATTERN ]; then
-    rm -rf $PATTERN
-  fi
-done
 
 build_local() {
 
