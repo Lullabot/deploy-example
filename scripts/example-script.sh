@@ -5,7 +5,7 @@
 #############
 
 # Configure Git repository.
-GIT_URL="git@github.com:Lulabot/deploy-example.git"
+GIT_URL="git@github.com:Lullabot/deploy-example.git"
 GIT_REMOTE_NAME="origin"
 UNCOMPILED_BRANCH="master"
 COMPILED_BRANCH="master-compiled"
