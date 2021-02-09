@@ -84,6 +84,9 @@ function serve () {
   gulp.watch([paths.scss.watch, paths.scss.bootstrap], styles).on('change', browserSync.reload)
 }
 
+// Build task.
+exports.build = gulp.parallel([styles, js]);
+
 const build = gulp.series(styles, gulp.parallel(js, serve))
 
 exports.styles = styles
