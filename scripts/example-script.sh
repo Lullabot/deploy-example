@@ -59,6 +59,7 @@ fi
 build_local() {
 
   # Build the theme assets
+  ( cd web/themes/custom/deploy_example_theme && npm install )
   ( cd web/themes/custom/deploy_example_theme && npm run build )
 
   # Install files with composer
