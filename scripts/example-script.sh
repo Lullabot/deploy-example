@@ -36,24 +36,9 @@ case $INPUT in
  ;;
 esac
 
-# Make sure the repo exists as a remote.
-if git remote|grep $GIT_REMOTE_NAME; then
-  git remote set-url $GIT_REMOTE_NAME $GIT_URL
-else
-  git remote add $GIT_REMOTE_NAME $GIT_URL
-fi
-
-# Make sure $UNCOMPILED_BRANCH is clean.
-git checkout $UNCOMPILED_BRANCH
-git fetch $GIT_REMOTE_NAME
-
-# Checkout that the branch is clean
-FILES=`git diff --name-only`
-if [ ! -z "$FILES" ]; then
-  echo "\n>> Aborted deployment. Please clean up the ${UNCOMPILED_BRANCH} branch."
-  exit 1
-fi
-
+# Clone the repo
+cd /tmp
+git clone $GIT_URL
 
 #########
 # BUILD #
@@ -61,21 +46,19 @@ fi
 
 build_local() {
 
-  # Build the theme assets
-  ( cd web/themes/custom/deploy_example_theme && npm install )
-
-  if [ ! -d "web/themes/custom/deploy_example_theme/js" ]; then
-    mkdir web/themes/custom/deploy_example_theme/js
-  fi
-  if [ ! -d "web/themes/custom/deploy_example_theme/css" ]; then
-    mkdir web/themes/custom/deploy_example_theme/css
-  fi
-
-  ( cd web/themes/custom/deploy_example_theme && npm run build )
-  sleep 20
+  cd /tmp/deploy-example
 
   # Install files with composer
   composer install --optimize-autoloader &> /dev/null
+
+  # Build the theme assets
+  ( cd web/themes/custom/deploy_example_theme && npm install --global gulp-cli  )
+
+  # Make sure the js and css directories exist
+  mkdir -p web/themes/custom/deploy_example_theme/js
+  mkdir -p web/themes/custom/deploy_example_theme/css
+
+  ( cd web/themes/custom/deploy_example_theme && npm run build )
 
 }
 
