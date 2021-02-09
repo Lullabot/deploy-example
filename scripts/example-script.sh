@@ -75,6 +75,7 @@ build_local() {
 
   # Install files with composer
   composer install --optimize-autoloader &> /dev/null
+  sleep 30
 
 }
 
