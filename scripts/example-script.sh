@@ -114,7 +114,7 @@ git commit --quiet -m"Deployment for tag ${TAG}"
 git checkout $COMPILED_BRANCH
 git checkout $TAG -- .
 git commit --quiet -m"Deployment for tag ${TAG}"
-git tag -a "${TAG}" -m "Compiled code for ${CTAG}."
+git tag -a "${TAG}" -m "Compiled code for ${TAG}."
 git branch -D $TAG
 
 # Push our branch and tags.
