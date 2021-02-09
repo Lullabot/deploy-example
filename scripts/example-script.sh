@@ -74,7 +74,7 @@ build_local() {
   ( cd web/themes/custom/deploy_example_theme && npm run build )
 
   # Install files with composer
-  composer install --optimize-autoloader > /dev/null
+  composer install --optimize-autoloader &> /dev/null
 
 }
 
