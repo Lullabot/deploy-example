@@ -15,6 +15,9 @@ FORCE_COMMIT_PATTERNS="vendor \
 web/core \
 web/modules/contrib \
 web/themes/contrib \
+web/themes/custom/deploy_example_theme/css \
+web/themes/custom/deploy_example_theme/js \
+web/themes/custom/deploy_example_theme/node_modules \
 web/profiles/contrib \
 web/libraries"
 
