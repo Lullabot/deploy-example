@@ -93,7 +93,7 @@ for PATTERN in $FORCE_COMMIT_PATTERNS; do
   if [ -d $PATTERN ]; then
     find $PATTERN -type d -name .git | xargs rm -rf
     # Add all of the $UNCOMPILED_BRANCH assets into $COMPILED_BRANCH.
-    git add --force $PATTERN > /dev/null
+    git add --force $PATTERN &> /dev/null
   fi
 done
 
