@@ -22,7 +22,7 @@ web/themes/custom/deploy_example_theme/node_modules"
 
 # Clean out all .git dirs from any directories.
 for PATTERN in $FORCE_COMMIT_PATTERNS; do
-  echo $PATTERN
+  echo "Force push to $PATTERN"
   if [ -d $PATTERN ]; then
     find $PATTERN -type d -name .git | xargs rm -rf
     git add --force $PATTERN &> /dev/null
