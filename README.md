@@ -15,6 +15,7 @@ Git repository, such as Pantheon or Acquia.
 git checkout master-compiled
 git pull origin master-compiled
 git merge origin/master
+git push
 ```
 
 ## Build artifacts.
@@ -34,6 +35,7 @@ git push
 ## Reset all the things
 ```
 git checkout master
+composer install --optimize-autoloader
 drush build
 ```
 
