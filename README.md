@@ -19,10 +19,10 @@ git merge master
 
 ## Build artifacts.
 ```
-composer install --optimize-autoloader
+drush build
 ```
 
-# Run the script.
+## Run the script to force push.
 ```
 sh scripts/deploy-script.sh
 ```
