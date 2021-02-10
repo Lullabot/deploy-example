@@ -25,6 +25,7 @@ for PATTERN in $FORCE_COMMIT_PATTERNS; do
   if [ -d $PATTERN ]; then
     find $PATTERN -type d -name .git | xargs rm -rf
     git add --force $PATTERN &> /dev/null
+    sleep 5
   fi
 done
 
