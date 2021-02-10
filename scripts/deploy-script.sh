@@ -4,10 +4,7 @@
 # CONFIGURE #
 #############
 
-# Make sure the js and css directories exist
-mkdir -p web/themes/custom/deploy_example_theme/js
-mkdir -p web/themes/custom/deploy_example_theme/css
-mkdir -p web/themes/custom/deploy_example_theme/node_modules
+drush build
 
 # Directories or path patterns to force commit.
 FORCE_COMMIT_PATTERNS="vendor \
