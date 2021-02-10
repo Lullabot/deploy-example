@@ -10,7 +10,7 @@ Git repository, such as Pantheon or Acquia.
 
 # The process
 
-## Merge master into compiled master
+## Merge master into compiled master.
 ```
 git checkout master-compiled
 git pull origin master-compiled
@@ -18,27 +18,30 @@ git merge master
 ```
 
 ## Build artifacts.
+```
+composer install --optimize-autoloader
+```
 
-# Run the script
+# Run the script.
 ```
 sh scripts/deploy-script.sh
 ```
 
-## Commit
+## Commit.
 ```
 git add .
 git commit -m "Whatever"
 git push origin master
 ```
 
-## Reset all the things
+## Reset all the things.
 ```
 git checkout master
 composer install --optimize-autoloader
 drush build
 ```
 
-## Update database, import config, clear cache
+## Update database, import config, and clear cache.
 ```
 drush @{site.env} -y updb
 drush @{site.env} -y csim
