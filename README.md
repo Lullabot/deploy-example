@@ -31,7 +31,7 @@ sh scripts/deploy-script.sh
 ```
 git add .
 git commit -m "Whatever"
-git push origin master
+git push origin master-compiled
 ```
 
 ## Reset all the things.
