@@ -25,6 +25,7 @@
         "drupal/devel": "^4.1",
         "drupal/environment_indicator": "^4.0",
         "drupal/pathauto": "^1.8",
+        "drupal/quicklink": "^1.3",
         "drush/drush": "^10.3"
     },
     "conflict": {
