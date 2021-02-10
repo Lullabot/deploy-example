@@ -34,6 +34,7 @@ git push origin master
 ## Reset all the things
 ```
 git checkout master
+composer install --optimize-autoloader
 drush build
 ```
 
