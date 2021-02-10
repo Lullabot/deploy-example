@@ -24,6 +24,7 @@
         "drupal/core-recommended": "^9.1",
         "drupal/devel": "^4.1",
         "drupal/environment_indicator": "^4.0",
+        "drupal/pathauto": "^1.8",
         "drush/drush": "^10.3"
     },
     "conflict": {
